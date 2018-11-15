@@ -1,12 +1,13 @@
 const publicIp = require('public-ip');
 const fs = require('fs');
 const rpn = require('request-promise-native')
+const headers = require('./headers')
 
 function getDnsRecords() {
     return new Promise(function(resolve, reject) {
         var options = {
-            url: 'https://api.cloudflare.com/client/v4/zones/968a8c0efcb81e720783a14683cc3d2c/dns_records',
-            headers: require('./headers'),
+            url: 'https://api.cloudflare.com/client/v4/zones/'+ headers.zone_identifier +'/dns_records',
+            headers: headers.header,
           };
         rpn.get(options)
         .then(function (htmlString) {
