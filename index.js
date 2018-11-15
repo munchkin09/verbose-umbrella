@@ -43,6 +43,7 @@ function doWork() {
         Promise.all(promises)
         .then(function(bool) {
             require('./scriptGetDns')
+            exit.process(1)
             return bool
         })
     })
