@@ -35,3 +35,4 @@ getDnsRecords()
         process.exit(1)
     })
 });
+

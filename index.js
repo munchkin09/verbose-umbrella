@@ -8,43 +8,43 @@ var myJson = {
     ip: ''
 };
 
-
-
-
-
-
 function doWork() {
     const json = require('./ip.json');
     console.log('doWork empieza!' + json.ip)
     publicIp.v4()
     .then(ip => {
         if(ip === domains[0].content) return 0
-        domains.map((element) => {
-            var options = {
-                url: 'https://api.cloudflare.com/client/v4/zones/968a8c0efcb81e720783a14683cc3d2c/dns_records/' + element.id,
-                headers: headers,
+        const promises = domains.map((element) => {
+            return new Promise(function(resolve, reject) {
+                var options = {
+                url: 'https://api.cloudflare.com/client/v4/zones/'+ headers.zone_identifier +'/dns_records/' + element.id,
+                headers: headers.header,
                 body: {
                     'type':'A',
                     'name':element.name,
                     'content':ip,
                     'ttl':120,
                     'proxied':element.name == 'ssh.carloscacharreo.xyz' || element.name == 'chat.carloscacharreo.xyz' ? false : true }
-              };    
-            console.log(JSON.stringify(options,null,2))
-            rpn.put(options)
-            .then(function (htmlString) {
-                 response =  JSON.parse(htmlString)
-                 console.log(htmlString);
-                 
+                };    
+                console.log(JSON.stringify(options,null,2))
+                rpn.put(options)
+                .then(function (htmlString) {
+                    response =  JSON.parse(htmlString)
+                    console.log(htmlString);    
+                    resolve(true)
 
+                })
+                .catch(function (err) {
+                    // Crawling failed...
+                    reject(err)
+                });
             })
-            .catch(function (err) {
-                // Crawling failed...
-            });
         })
-        
-
-
+        Promise.all(promises)
+        .then(function(bool) {
+            require('./scriptGetDns')
+            return bool
+        })
     })
 }
 
