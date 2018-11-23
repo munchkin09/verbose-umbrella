@@ -28,7 +28,7 @@ function doWork() {
                     'proxied':element.name == 'ssh.carloscacharreo.xyz' || element.name == 'chat.carloscacharreo.xyz' ? false : true }
                 };    
                 console.log(JSON.stringify(options,null,2))
-                rpn.put((options)
+                rpn.put(options)
                 .then(function (htmlString) {
                     response =  JSON.parse(htmlString)
                     console.log(htmlString);    
@@ -38,8 +38,11 @@ function doWork() {
                 .catch(function (err) {
                     // Crawling failed...
                     reject(err)
-                });
+                })
+            
+            
             })
+            
         })
         Promise.all(promises)
         .then(function(bool) {
