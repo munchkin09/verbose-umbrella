@@ -30,7 +30,7 @@ function doWork() {
                 console.log(JSON.stringify(options,null,2))
                 rpn.put(options)
                 .then(function (htmlString) {
-                    response =  JSON.parse(htmlString)
+                    //response =  JSON.parse(htmlString)
                     console.log(htmlString);    
                     resolve(true)
 
@@ -46,7 +46,7 @@ function doWork() {
         })
         Promise.all(promises)
         .then(function(bool) {
-            //require('./scriptGetDns')
+            require('./scriptGetDns')
             exit.process(1)
             return bool
         })
