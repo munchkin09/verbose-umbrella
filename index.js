@@ -42,10 +42,17 @@ function doWork() {
         })
         Promise.all(promises)
         .then(function(bool) {
-            require('./scriptGetDns')
+            //require('./scriptGetDns')
             exit.process(1)
             return bool
         })
+        .catch(function(err){
+            console.log(err);
+            return false
+        })
+    }).catch(err => {
+        console.log(err)
+        return true
     })
 }
 
@@ -54,11 +61,19 @@ function yourCallback(err, data) {
     setInterval(doWork,10000)
 }
 
-publicIp.v4({ http: true, timeout: 2000 }).then(ip => {
-    console.log('1st publicIp =>' + ip)
-    myJson.ip = ip;
-    fs.writeFile( 'ip.json', JSON.stringify( myJson ), 'utf8', yourCallback );
-});
+function getIp() {
+    publicIp.v4({ http: true, timeout: 2000 }).then(ip => {
+        console.log('1st publicIp =>' + ip)
+        myJson.ip = ip;
+        fs.writeFile( 'ip.json', JSON.stringify( myJson ), 'utf8', yourCallback );
+    })
+    .catch (err => {
+        console.log(err)
+        setTimeout(getIp,10000)
+    });
+}
+
+getIp()
 
 
 
