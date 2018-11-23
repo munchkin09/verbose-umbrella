@@ -17,7 +17,8 @@ function doWork() {
         const promises = domains.map((element) => {
             return new Promise(function(resolve, reject) {
                 var options = {
-                url: 'https://api.cloudflare.com/client/v4/zones/'+ headers.zone_identifier +'/dns_records/' + element.id,
+                uri: 'https://api.cloudflare.com/client/v4/zones/'+ headers.zone_identifier +'/dns_records/' + element.id,
+                json : true,
                 headers: headers.header,
                 body: {
                     'type':'A',
@@ -27,7 +28,7 @@ function doWork() {
                     'proxied':element.name == 'ssh.carloscacharreo.xyz' || element.name == 'chat.carloscacharreo.xyz' ? false : true }
                 };    
                 console.log(JSON.stringify(options,null,2))
-                rpn.put(options)
+                rpn.put((options)
                 .then(function (htmlString) {
                     response =  JSON.parse(htmlString)
                     console.log(htmlString);    
