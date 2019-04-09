@@ -1,0 +1,19 @@
+{ 
+    "apps" : [ 
+        { 
+            "name":         "ipUpdater", 
+            "script":       "./index.js", 
+            "cwd":          "/home/carlos/ip-updater", 
+            "autorestart":  true, 
+            "mergeLogs":    true, 
+            "output":       "./ip_updater_out.log", 
+            "error":        "./i_updater_err.log", 
+            "env": { 
+                "NODE_ENV": "development" 
+            }, 
+            "env_production": { 
+                "NODE_ENV": "production" 
+            }
+        }
+    ] 
+} 

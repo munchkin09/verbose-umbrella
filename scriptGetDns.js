@@ -1,7 +1,7 @@
 const publicIp = require('public-ip');
 const fs = require('fs');
-const rpn = require('request-promise-native')
-const headers = require('./headers')
+const rpn = require('request-promise-native');
+const headers = require('./headers');
 
 function getDnsRecords() {
     return new Promise(function(resolve, reject) {

@@ -2,3 +2,5 @@ node_modules/
 headers.js
 ip.json
 my_zone_identifier.json
+index.min.js
+scriptGetDns.min.js
